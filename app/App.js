@@ -9,7 +9,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{height: 700}}>
         <ModalExample />
       </div>
     );

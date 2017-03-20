@@ -1,60 +1,41 @@
-import React from 'react'
-import { Popover, Tooltip, Button , Modal, OverlayTrigger } from 'react-bootstrap'
-import InputForm from './InputForm';
+import React, {Component} from 'react'
+import RFQInputForm from './RFQInputForm';
+import { Button, Header, Modal } from 'semantic-ui-react'
 
-  const ModalExample = React.createClass({
-    getInitialState() {
-      return { showModal: false };
-    },
+class ModalExample extends Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = { open: false };
+  }
 
-    close() {
-      this.setState({ showModal: false });
-    },
+  show() {
+    console.log('show')
+    this.setState({open: !this.state.open})
+  }
 
-    open() {
-      this.setState({ showModal: true });
-    },
+  close() {
+    console.log('close')
+    this.setState({open: false})
+  }
 
-    render() {
-      const popover = (
-        <Popover id="modal-popover" title="popover">
-          very popover. such engagement
-        </Popover>
-      );
-      const tooltip = (
-        <Tooltip id="modal-tooltip">
-          wow.
-        </Tooltip>
-      );
+  render() {
+    return(
+      <div>
+        <Button onClick={this.show.bind(this)} style={{margin: 150}}>Add New RFQ</Button>
 
-      return (
-        <div>
-          <p>Click to get the full Modal experience!</p>
+        <Modal open={this.state.open} onClose={this.close.bind(this)} size={'small'}>
+          <Modal.Header>Select a Photo</Modal.Header>
+          <Modal.Content>
+            <Modal.Description>
+              <RFQInputForm />
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
+      </div>
+    )
+  }
 
-          <Button
-            bsStyle="primary"
-            bsSize="large"
-            onClick={this.open}
-          >
-            + New Item
-          </Button>
-
-          <Modal show={this.state.showModal} onHide={this.close}>
-            <Modal.Header closeButton>
-              <Modal.Title>Modal heading</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-
-              <InputForm />
-            
-            </Modal.Body>
-            <Modal.Footer>
-              <Button onClick={this.close}>Close</Button>
-            </Modal.Footer>
-          </Modal>
-        </div>
-      );
-    }
-  });
+};
 
 export default ModalExample;
