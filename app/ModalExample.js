@@ -10,30 +10,32 @@ class ModalExample extends Component {
     this.state = { open: false };
   }
 
-  show() {
+  show(e) {
     this.setState({open: !this.state.open})
   }
 
-  close() {
+  close(e) {
     this.setState({open: false})
   }
 
   loggedIn() {
     if(this.props.loggedIn) {
       return (
-        <Modal open={this.state.open} onClose={this.close.bind(this)} size={'small'}>
-          <Modal.Header>Add New RFQ</Modal.Header>
+        <Modal open={this.state.open} size={'small'}>
           <Modal.Content>
             <Modal.Description>
-              <RFQInputForm handleSubmit={this.props.handleSubmit}/>
+              <RFQInputForm handleSubmit={this.props.handleSubmit} close={this.close.bind(this)}/>
             </Modal.Description>
           </Modal.Content>
+
         </Modal>
       )
     } else {
       return (
         <Modal open={!this.props.loggedIn} style={{width: 500}}>
+
           <Modal.Header>Please Log In</Modal.Header>
+
           <Modal.Content>
             <Modal.Description>
               <Card centered>
@@ -43,6 +45,7 @@ class ModalExample extends Component {
               </Card>
             </Modal.Description>
           </Modal.Content>
+
         </Modal>
       )
     }
@@ -51,7 +54,11 @@ class ModalExample extends Component {
   render() {
     return(
       <div>
-        <Button onClick={this.show.bind(this)} style={{margin: 150}}>Add New RFQ</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New RFQ</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New Customer</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New Part</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New Quote</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New PO</Button>
 
         {this.loggedIn()}
       </div>

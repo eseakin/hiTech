@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Button, Checkbox, Form, Card, Message, TextArea } from 'semantic-ui-react'
+import { Button, Checkbox, Form, Card, Message, TextArea, Icon, Label } from 'semantic-ui-react'
 import AddPart from './AddPart'
 
 class RFQInputForm extends Component {
@@ -85,12 +85,18 @@ class RFQInputForm extends Component {
     }
   }
 
-  handleSubmit(state) {
+  handleSubmit(e, state) {
     this.props.handleSubmit(state, this.handleSubmitCB.bind(this));
   }
 
   render() {
     return(
+      <div>
+      <Label style={{width: '100%', borderRadius: '5px 5px 0 0'}} size='huge' color='blue'>
+        Add New RFQ
+        <Icon style={{float:'right'}} size='tiny' link circular name='delete' name='cancel' color='red' inverted onClick={(e) => this.props.close(e)}/>
+      </Label>
+
       <Form success={this.state.submitSuccess} error={this.state.submitFailure}>
           <Card fluid>
             <Card.Content>
@@ -133,7 +139,7 @@ class RFQInputForm extends Component {
           )
         })}
 
-        <Button type='button' primary onClick={() => this.handleSubmit(this.state)}>Submit</Button>
+        <Button type='button' name='submit' primary onClick={(e) => this.handleSubmit(e, this.state)}>Submit</Button>
 
         <Button onClick={this.removePart.bind(this)} type='button' floated='right'>
           Remove Last Part
@@ -155,6 +161,7 @@ class RFQInputForm extends Component {
           content={this.state.failureMsg}
         />
       </Form>
+        </div>
     )
   }
 }

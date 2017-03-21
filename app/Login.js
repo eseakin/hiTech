@@ -21,8 +21,8 @@ class Login extends Component {
     return(
       <Form success={this.props.loggedIn}>
         <Form.Field>
-          <label>Username</label>
-          <input placeholder='Username' name='username' value={this.state.username} onChange={this.handleChange.bind(this)}/>
+          <label>Email</label>
+          <input placeholder='Email' name='username' value={this.state.username} onChange={this.handleChange.bind(this)}/>
         </Form.Field>
         <Form.Field>
           <label>Password</label>

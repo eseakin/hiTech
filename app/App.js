@@ -9,19 +9,47 @@ class App extends Component {
 
     firebase.initializeApp(config);
 
-    this.state = { loggedIn: false, db: firebase.database(), status: '' };
+    this.state = { loggedIn: true, db: firebase.database(), status: '' };
   }
 
   handleSubmit(data, cb) {
-    //send form data to database
-    console.log(data)
+    //clean up form data for database
+    delete data.failureMsg
+    delete data.submitFailure
+    delete data.submitSuccess
+    data.partsCount++
+    data.dateEntered = this.formattedDate()
+    data.date = this.formattedDate(new Date(data.date))
+    data.expDate = this.formattedDate(new Date(data.expDate))
+
     this.state.db.ref('rfq/').push(data)
       .then((err) => cb(err), (err) => cb(err));
   }
 
-  loginSubmit(e, obj) {
+  loginSubmit(e, data) {
     //send username and pw for verification
-    this.setState({loggedIn: true})
+    let email = data.username
+    let password = data.password
+
+    firebase.auth().signInWithEmailAndPassword(email, password).then((response)=>{this.setState({loggedIn: true})}, (error) => {
+      this.setState({status: error.message})
+    });
+
+
+
+
+    // this.setState({loggedIn: true})
+  }
+
+  formattedDate(d = new Date) {
+    let month = String(d.getMonth() + 1);
+    let day = String(d.getDate());
+    const year = String(d.getFullYear().toString().substr(2,2));
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return `${month}/${day}/${year}`;
   }
 
   render() {
