@@ -25,10 +25,10 @@ class ModalExample extends Component {
         <Button onClick={this.show.bind(this)} style={{margin: 150}}>Add New RFQ</Button>
 
         <Modal open={this.state.open} onClose={this.close.bind(this)} size={'small'}>
-          <Modal.Header>Select a Photo</Modal.Header>
+          <Modal.Header>Add New RFQ</Modal.Header>
           <Modal.Content>
             <Modal.Description>
-              <RFQInputForm />
+              <RFQInputForm handleSubmit={this.props.handleSubmit}/>
             </Modal.Description>
           </Modal.Content>
         </Modal>
