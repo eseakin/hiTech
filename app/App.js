@@ -13,6 +13,7 @@ class App extends Component {
   }
 
   handleSubmit(data, cb) {
+    console.log('submit form')
     //clean up form data for database
     delete data.failureMsg
     delete data.submitFailure
@@ -35,9 +36,7 @@ class App extends Component {
       this.setState({status: error.message})
     });
 
-
-
-
+    console.log('submit login')
     // this.setState({loggedIn: true})
   }
 

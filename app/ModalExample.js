@@ -1,13 +1,47 @@
 import React, {Component} from 'react'
 import RFQInputForm from './RFQInputForm';
-import { Button, Header, Modal, Card, Label } from 'semantic-ui-react'
+import { Button, Header, Modal, Card, Label, Search } from 'semantic-ui-react'
+import _ from 'lodash'
 import Login from './Login'
+
+const source = [
+{
+  title: 'apple',
+  description: 'test',
+  image: 'http://www.placehold.it/100x100',
+  price: '$100'
+}]
 
 class ModalExample extends Component {
   constructor(props) {
     super(props);
   
     this.state = { open: false };
+  }
+
+  componentWillMount() {
+    this.resetComponent()
+
+  }
+
+  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
+
+  handleResultSelect = (e, result) => this.setState({ value: result.title })
+
+  handleSearchChange = (e, value) => {
+    this.setState({ isLoading: true, value })
+
+    setTimeout(() => {
+      if (this.state.value.length < 1) return this.resetComponent()
+
+      const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
+      const isMatch = (result) => re.test(result.title) || re.test(result.description)
+
+      this.setState({
+        isLoading: false,
+        results: _.filter(source, isMatch),
+      })
+    }, 500)
   }
 
   show(e) {
@@ -52,6 +86,8 @@ class ModalExample extends Component {
   }
 
   render() {
+    const { isLoading, value, results } = this.state
+
     return(
       <div>
         <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New RFQ</Button>
@@ -59,6 +95,14 @@ class ModalExample extends Component {
         <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New Part</Button>
         <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New Quote</Button>
         <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New PO</Button>
+
+        <Search
+          loading={isLoading}
+          onResultSelect={this.handleResultSelect}
+          onSearchChange={this.handleSearchChange}
+          results={results}
+          value={value}
+        />
 
         {this.loggedIn()}
       </div>
