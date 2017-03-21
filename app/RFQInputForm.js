@@ -8,8 +8,10 @@ class RFQInputForm extends Component {
 
     this.state = {
       submitSuccess: false,
+      submitFailure: false,
+      failureMsg: 'Unknown failure',
       partsCount: 0,
-      parts: [{ name: '', number: '', revision: '', description: '', prices: [[]] }],
+      parts: [{ name: '', number: '', revision: '', description: '', prices: [{}] }],
       custName: '',
       custNum: '',
       date: '',
@@ -19,34 +21,34 @@ class RFQInputForm extends Component {
 
   addPart(e) {
     let partsForm = this.state.partsForm;
-    let partsIndex = this.state.partsIndex + 1;
+    let partsCount = this.state.partsCount + 1;
 
     let parts = this.state.parts;
-    parts.push({ name: '', number: '', revision: '', description: '', prices: [[]] });
+    parts.push({ name: '', number: '', revision: '', description: '', prices: [{}] });
 
-    this.setState({partsIndex, parts});
+    this.setState({partsCount, parts});
   }
 
   removePart(e) {
     let partsForm = this.state.partsForm;
-    let partsIndex = this.state.partsIndex + 1;
+    let partsCount = this.state.partsCount + 1;
 
     let parts = this.state.parts;
     parts.pop();
 
-    this.setState({partsIndex, parts});
+    this.setState({partsCount, parts});
   }
 
-  addPrice(e, partsIndex) {
+  addPrice(e, partsCount) {
     let parts = this.state.parts
-    parts[partsIndex].prices.push([])
+    parts[partsCount].prices.push({})
 
     this.setState({parts})
   }
 
-  removePrice(e, partsIndex) {
+  removePrice(e, partsCount) {
     let parts = this.state.parts
-    parts[partsIndex].prices.pop()
+    parts[partsCount].prices.pop()
 
     this.setState({parts})
   }
@@ -66,51 +68,62 @@ class RFQInputForm extends Component {
       this.setState({parts});    }
   }
 
-  handlePriceChange({name, value}, partsIndex, pricesIndex) {
+  handlePriceChange({name, value}, partsCount, pricesIndex) {
     let parts = this.state.parts;
-    let price = parts[partsIndex].prices[pricesIndex]
+    let price = parts[partsCount].prices[pricesIndex]
 
-    if(name==='quantity') {
-      price[0] = value
+    price[name] = value
+
+    this.setState({parts})
+  }
+
+  handleSubmitCB(err) {
+    if(err.message) {
+      this.setState({submitFailure: true, failureMsg: err.message})
     } else {
-      price[1] = value
+      this.setState({submitSuccess: true})
     }
   }
 
   handleSubmit(state) {
-    this.props.handleSubmit(state);
-    this.setState({submitSuccess: true});
+    this.props.handleSubmit(state, this.handleSubmitCB.bind(this));
   }
 
   render() {
     return(
-      <Form success={this.state.submitSuccess}>
-        <Form.Group>
-          <Form.Field width={8}>
-            <label>Customer Name</label>
-            <input placeholder='Customer Name' name='custName' value={this.state.custName} onChange={this.handleChange.bind(this)}/>
-          </Form.Field>
-          <Form.Field width={8}>
-            <label>Customer Number</label>
-            <input readOnly placeholder='Customer Number' name='custNum' value={this.state.custNum} onChange={this.handleChange.bind(this)}/>
-          </Form.Field>
-        </Form.Group>
-        <Form.Group>
-          <Form.Field width={4}>
-            <label>Date Received</label>
-            <input placeholder='Date Received' name='date' value={this.state.date} onChange={this.handleChange.bind(this)}/>
-          </Form.Field>
-          <Form.Field width={4}>
-            <label>Expiration Date</label>
-            <input placeholder='Exp Date' name='expDate' value={this.state.expDate} onChange={this.handleChange.bind(this)}/>
-          </Form.Field>
-        </Form.Group>
+      <Form success={this.state.submitSuccess} error={this.state.submitFailure}>
+          <Card fluid>
+            <Card.Content>
+              <Card.Header>
+                <Form.Group>
+                  <Form.Field width={8}>
+                    <label size='huge'>Customer Name</label>
+                    <input placeholder='Customer Name' name='custName' value={this.state.custName} onChange={this.handleChange.bind(this)}/>
+                  </Form.Field>
+                  <Form.Field width={8}>
+                    <label>Customer Number</label>
+                    <input readOnly placeholder='Customer Number' name='custNum' value={this.state.custNum} onChange={this.handleChange.bind(this)}/>
+                  </Form.Field>
+                </Form.Group>
+              </Card.Header>
+            <Form.Group>
+              <Form.Field width={4}>
+                <label>Date Received</label>
+                <input placeholder='Date Received' name='date' value={this.state.date} onChange={this.handleChange.bind(this)}/>
+              </Form.Field>
+              <Form.Field width={4}>
+                <label>Expiration Date</label>
+                <input placeholder='Exp Date' name='expDate' value={this.state.expDate} onChange={this.handleChange.bind(this)}/>
+              </Form.Field>
+            </Form.Group>
+          </Card.Content>
+        </Card>
 
         {this.state.parts.map((part, i) => {
           return (
             <AddPart 
               key={i} 
-              partsIndex={i} 
+              partsCount={i} 
               prices={part.prices}
               addPrice={this.addPrice.bind(this)}
               removePrice={this.removePrice.bind(this)}
@@ -134,6 +147,12 @@ class RFQInputForm extends Component {
           success
           header='Success'
           content="This RFQ has been saved."
+        />
+
+        <Message
+          error
+          header='Failure, RFQ was not saved.'
+          content={this.state.failureMsg}
         />
       </Form>
     )
