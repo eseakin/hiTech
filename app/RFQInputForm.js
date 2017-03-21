@@ -39,9 +39,14 @@ class RFQInputForm extends Component {
 
   addPrice(e, partsIndex) {
     let parts = this.state.parts
-    console.log(parts[partsIndex])
-
     parts[partsIndex].prices.push([])
+
+    this.setState({parts})
+  }
+
+  removePrice(e, partsIndex) {
+    let parts = this.state.parts
+    parts[partsIndex].prices.pop()
 
     this.setState({parts})
   }
@@ -108,6 +113,7 @@ class RFQInputForm extends Component {
               partsIndex={i} 
               prices={part.prices}
               addPrice={this.addPrice.bind(this)}
+              removePrice={this.removePrice.bind(this)}
               handleChange={this.handleChange.bind(this)} 
               handlePriceChange={this.handlePriceChange.bind(this)} 
             />

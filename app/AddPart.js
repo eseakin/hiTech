@@ -14,6 +14,10 @@ class AddPart extends Component {
     this.props.addPrice(e, partsIndex);
   }
 
+  removePrice(e, partsIndex) {
+    this.props.removePrice(e, partsIndex);
+  }
+
   handleChange(e) {
     this.props.handleChange(e);
   }
@@ -54,6 +58,9 @@ class AddPart extends Component {
 
           <Button type='button' style={{height: 40, marginTop: 20}} onClick={(e) => this.addPrice(e, partsIndex)}>
             Add Pricing
+          </Button>
+          <Button type='button' style={{height: 40, marginTop: 20}} onClick={(e) => this.removePrice(e, partsIndex)}>
+            Remove Last Price
           </Button>
         </Card.Content>
       </Card>
