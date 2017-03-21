@@ -7,13 +7,11 @@ class AddPart extends Component {
     super(props);
   
     this.state = {
-      priceCount: 0,
-      prices: [{}]
     };
   }
 
-  addPrice(e) {
-console.log('click')
+  addPrice(e, partsIndex) {
+    this.props.addPrice(e, partsIndex);
   }
 
   handleChange(e) {
@@ -50,11 +48,11 @@ console.log('click')
             <TextArea rows={3} name={partsIndex + ' description'} placeholder='Description' onChange={this.handleChange.bind(this)}/>
           </Form.Field>
 
-          {this.state.prices.map((price, i) => {
+          {this.props.prices.map((price, i) => {
             return (<AddPrice pricesIndex={i} partsIndex={partsIndex} handlePriceChange={this.props.handlePriceChange}/>)
           })}
 
-          <Button type='button' style={{height: 40, marginTop: 20}} onClick={this.addPrice.bind(this)}>
+          <Button type='button' style={{height: 40, marginTop: 20}} onClick={(e) => this.addPrice(e, partsIndex)}>
             Add Pricing
           </Button>
         </Card.Content>

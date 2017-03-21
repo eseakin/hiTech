@@ -9,7 +9,7 @@ class RFQInputForm extends Component {
     this.state = {
       submitSuccess: false,
       partsCount: 0,
-      parts: [{name: '', number: '', revision: '', description: '', prices: [[]]}],
+      parts: [{ name: '', number: '', revision: '', description: '', prices: [[]] }],
       custName: '',
       custNum: '',
       date: '',
@@ -22,7 +22,7 @@ class RFQInputForm extends Component {
     let partsIndex = this.state.partsIndex + 1;
 
     let parts = this.state.parts;
-    parts.push({name: '', number: '', revision: '', description: '', prices: [[]]});
+    parts.push({ name: '', number: '', revision: '', description: '', prices: [[]] });
 
     this.setState({partsIndex, parts});
   }
@@ -35,6 +35,15 @@ class RFQInputForm extends Component {
     parts.pop();
 
     this.setState({partsIndex, parts});
+  }
+
+  addPrice(e, partsIndex) {
+    let parts = this.state.parts
+    console.log(parts[partsIndex])
+
+    parts[partsIndex].prices.push([])
+
+    this.setState({parts})
   }
 
   handleChange({target: {name, value}}) {
@@ -61,8 +70,6 @@ class RFQInputForm extends Component {
     } else {
       price[1] = value
     }
-
-    console.log(price)
   }
 
   handleSubmit(state) {
@@ -95,7 +102,16 @@ class RFQInputForm extends Component {
         </Form.Group>
 
         {this.state.parts.map((part, i) => {
-          return (<AddPart key={i} partsIndex={i} handleChange={this.handleChange.bind(this)} handlePriceChange={this.handlePriceChange.bind(this)} />)
+          return (
+            <AddPart 
+              key={i} 
+              partsIndex={i} 
+              prices={part.prices}
+              addPrice={this.addPrice.bind(this)}
+              handleChange={this.handleChange.bind(this)} 
+              handlePriceChange={this.handlePriceChange.bind(this)} 
+            />
+          )
         })}
 
         <Button type='button' primary onClick={() => this.handleSubmit(this.state)}>Submit</Button>
