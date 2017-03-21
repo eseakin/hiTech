@@ -1,35 +1,44 @@
 import React, {Component} from 'react'
-import { Button, Checkbox, Form, Card, Message } from 'semantic-ui-react'
+import { Button, Checkbox, Form, Card, Message, TextArea } from 'semantic-ui-react'
+import AddPart from './AddPart'
 
 class RFQInputForm extends Component {
   constructor(props) {
     super(props);
 
-    let newPart = this.newPart(0);
-
     this.state = {
       submitSuccess: false,
-      partsForm: [newPart],
-      partsIndex: 0,
+      partsCount: 0,
+      parts: [{name: '', number: '', revision: '', description: '', prices: [[]]}],
       custName: '',
+      custNum: '',
       date: '',
-      parts: [{name: '', number: '', revision: '', description: '', quantity: 0, price: 0}]
-    };
+      expDate: ''
+    }
   }
 
-  handleClick(e) {
+  addPart(e) {
     let partsForm = this.state.partsForm;
     let partsIndex = this.state.partsIndex + 1;
-    partsForm.push(this.newPart(partsIndex));
 
     let parts = this.state.parts;
-    parts.push({name: '', number: '', revision: '', description: '', quantity: 0, price: 0});
+    parts.push({name: '', number: '', revision: '', description: '', prices: [[]]});
 
-    this.setState({partsForm, partsIndex, parts});
+    this.setState({partsIndex, parts});
+  }
+
+  removePart(e) {
+    let partsForm = this.state.partsForm;
+    let partsIndex = this.state.partsIndex + 1;
+
+    let parts = this.state.parts;
+    parts.pop();
+
+    this.setState({partsIndex, parts});
   }
 
   handleChange({target: {name, value}}) {
-    
+
     if(isNaN(parseInt(name[0]))){
       this.setState({[name]: value});
     } else {
@@ -43,70 +52,61 @@ class RFQInputForm extends Component {
       this.setState({parts});    }
   }
 
+  handlePriceChange({name, value}, partsIndex, pricesIndex) {
+    let parts = this.state.parts;
+    let price = parts[partsIndex].prices[pricesIndex]
+
+    if(name==='quantity') {
+      price[0] = value
+    } else {
+      price[1] = value
+    }
+
+    console.log(price)
+  }
+
   handleSubmit(state) {
     this.props.handleSubmit(state);
     this.setState({submitSuccess: true});
   }
 
-  newPart(partsIndex) {
-    return (
-      <Card fluid key={partsIndex}>
-        <Card.Content header={'Part ' + (partsIndex + 1)} />
-        <Card.Content>
-          <Form.Group width={16}>
-            <Form.Field width={6}>
-              <label>Part Number</label>
-              <input name={partsIndex + ' number'} placeholder='Part Number' onChange={this.handleChange.bind(this)} />
-            </Form.Field>
-            <Form.Field width={4}>
-              <label>Revision</label>
-              <input name={partsIndex + ' revision'} placeholder='Revision' onChange={this.handleChange.bind(this)}/>
-            </Form.Field>
-          </Form.Group>
-          <Form.Field>
-            <label>Part Name</label>
-            <input name={partsIndex + ' name'} placeholder='Part Name' onChange={this.handleChange.bind(this)}/>
-          </Form.Field>
-          <Form.Field>
-            <label>Description</label>
-            <input name={partsIndex + ' description'} placeholder='Description' onChange={this.handleChange.bind(this)}/>
-          </Form.Field>
-          <Form.Group>
-            <Form.Field width={4}>
-              <label>Quantity</label>
-              <input name={partsIndex + ' quantity'} placeholder='Quantity' onChange={this.handleChange.bind(this)}/>
-            </Form.Field>
-            <Form.Field width={4}>
-              <label>Price</label>
-              <input name={partsIndex + ' price'} placeholder='Price' onChange={this.handleChange.bind(this)}/>
-            </Form.Field>
-          </Form.Group>
-        </Card.Content>
-      </Card>
-    )
-  }
-
   render() {
     return(
       <Form success={this.state.submitSuccess}>
-        <Form.Field>
-          <label>Customer Name</label>
-          <input placeholder='Customer Name' name='custName' value={this.state.custName} onChange={this.handleChange.bind(this)}/>
-        </Form.Field>
-        <Form.Field>
-          <label>Date</label>
-          <input placeholder='Date' name='date' value={this.state.date} onChange={this.handleChange.bind(this)}/>
-        </Form.Field>
+        <Form.Group>
+          <Form.Field width={8}>
+            <label>Customer Name</label>
+            <input placeholder='Customer Name' name='custName' value={this.state.custName} onChange={this.handleChange.bind(this)}/>
+          </Form.Field>
+          <Form.Field width={8}>
+            <label>Customer Number</label>
+            <input readOnly placeholder='Customer Number' name='custNum' value={this.state.custNum} onChange={this.handleChange.bind(this)}/>
+          </Form.Field>
+        </Form.Group>
+        <Form.Group>
+          <Form.Field width={4}>
+            <label>Date Received</label>
+            <input placeholder='Date Received' name='date' value={this.state.date} onChange={this.handleChange.bind(this)}/>
+          </Form.Field>
+          <Form.Field width={4}>
+            <label>Expiration Date</label>
+            <input placeholder='Exp Date' name='expDate' value={this.state.expDate} onChange={this.handleChange.bind(this)}/>
+          </Form.Field>
+        </Form.Group>
 
-        {this.state.partsForm.map((part) => {
-          return part
+        {this.state.parts.map((part, i) => {
+          return (<AddPart key={i} partsIndex={i} handleChange={this.handleChange.bind(this)} handlePriceChange={this.handlePriceChange.bind(this)} />)
         })}
 
-        <Button onClick={this.handleClick.bind(this)} type='button'>
-          Add Another Part
+        <Button type='button' primary onClick={() => this.handleSubmit(this.state)}>Submit</Button>
+
+        <Button onClick={this.removePart.bind(this)} type='button' floated='right'>
+          Remove Last Part
         </Button>
 
-        <Button type='button' onClick={() => this.handleSubmit(this.state)}>Submit</Button>
+        <Button onClick={this.addPart.bind(this)} type='button' floated='right'>
+          Add Another Part
+        </Button>
 
         <Message
           success
