@@ -17,7 +17,7 @@ const SOURCE = [
   price: '$100'
 }]
 
-class ModalExample extends Component {
+class ModalForm extends Component {
   constructor(props) {
     super(props);
   
@@ -171,4 +171,4 @@ class ModalExample extends Component {
 
 };
 
-export default ModalExample;
+export default ModalForm;

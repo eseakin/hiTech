@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ModalExample from './ModalExample';
+import ModalForm from './ModalForm';
 import { Menu, Segment, Input } from 'semantic-ui-react'
 import firebase from 'firebase'
 import config from '../config/config'
@@ -99,7 +99,7 @@ class App extends Component {
 
     return (
       <div>
-        <ModalExample
+        <ModalForm
           handleSubmit={this.handleSubmit.bind(this)} 
           loggedIn={loggedIn} 
           loginSubmit={this.loginSubmit.bind(this)} 
