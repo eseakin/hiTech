@@ -31,35 +31,10 @@ class ModalForm extends Component {
     };
   }
 
-  componentWillMount() {
-    this.resetComponent()
-
-  }
-
-  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
-
-  handleResultSelect = (e, result) => this.setState({ value: result.title })
-
-  handleSearchChange = (e, value) => {
-    this.setState({ isLoading: true, value })
-
-    setTimeout(() => {
-      if (this.state.value.length < 1) return this.resetComponent()
-
-      const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-      const isMatch = (result) => re.test(result.title) || re.test(result.description)
-
-      this.setState({
-        isLoading: false,
-        results: SOURCE.filter(isMatch)
-      })
-    }, 500)
-  }
-
   show(e) {
     let name = e.target.name
 
-    if(!this.props.admin && name === 'userOpen')
+    if(this.props.admin < 2 && name === 'userOpen')
       return
     else
       this.setState({[name]: true})
@@ -154,15 +129,7 @@ class ModalForm extends Component {
         <Button onClick={this.show.bind(this)} style={{margin: 15}} name='partOpen'>Add New Part</Button>
         <Button onClick={this.show.bind(this)} style={{margin: 15}} name='quoteOpen'>Add New Quote</Button>
         <Button onClick={this.show.bind(this)} style={{margin: 15}} name='poOpen'>Add New PO</Button>
-        <Button onClick={this.show.bind(this)} style={{margin: 15, display: this.props.admin ? 'inline' : 'none'}} name='userOpen'>Add New User</Button>
-
-        <Search
-          loading={isLoading}
-          onResultSelect={this.handleResultSelect}
-          onSearchChange={this.handleSearchChange}
-          results={results}
-          value={value}
-        />
+        <Button onClick={this.show.bind(this)} style={{margin: 15, display: this.props.admin == 2 ? 'inline' : 'none'}} name='userOpen'>Add New User</Button>
 
         {this.loggedIn()}
       </div>

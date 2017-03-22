@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ModalForm from './ModalForm';
+import SearchContainer from './SearchContainer';
 import { Menu, Segment, Input } from 'semantic-ui-react'
 import firebase from 'firebase'
 import config from '../config/config'
@@ -12,7 +13,7 @@ class App extends Component {
 
     this.state = { 
       loggedIn: true, 
-      admin: true,
+      admin: 2,
       activeItem: 'customers',
       db: firebase.database(), 
       status: '', 
@@ -41,7 +42,6 @@ class App extends Component {
 
   handleSubmit(e, data, cb) {
     let name = e.target.name
-    console.log(name)
     console.log('submit form', this.state)
     //clean up form data for database
     delete data.failureMsg
@@ -53,6 +53,24 @@ class App extends Component {
       data.dateEntered = this.formattedDate()
       data.date = this.formattedDate(new Date(data.date))
       data.expDate = this.formattedDate(new Date(data.expDate))
+
+    } else if(name === 'users' && this.state.admin === 2) {
+      data.dob = this.formattedDate(new Date(data.dob))
+
+      let payload = {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        dob: data.dob,
+        address: data.address,
+        notes: data.notes,
+        admin: data.admin
+      }
+
+      this.state.db.ref(name + '/').child(data.userId).set(payload)
+        .then((err) => {cb(err); this.refreshDb()}, (err) => cb(err));
+
+      return
     }
 
     this.state.db.ref(name + '/').push(data)
@@ -67,18 +85,12 @@ class App extends Component {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
         (response) => {
-          if(this.state.users[response.uid] === 'admin')
-            this.setState({loggedIn: true, admin: true})          
-          else
-            this.setState({loggedIn: true})
+          this.setState({loggedIn: true, admin: this.state.users[response.uid].admin})          
         }, 
         (error) => {
           this.setState({status: error.message})
         }
     );
-
-    console.log('submit login')
-    // this.setState({loggedIn: true})
   }
 
   formattedDate(d = new Date) {
@@ -113,12 +125,8 @@ class App extends Component {
           <Menu.Item name='pos' active={activeItem === 'pos'} onClick={this.handleItemClick} />
           <Menu.Item name='quotes' active={activeItem === 'quotes'} onClick={this.handleItemClick} />
           <Menu.Item name='rfqs' active={activeItem === 'rfqs'} onClick={this.handleItemClick} />
-          <Menu.Item name='users' active={activeItem === 'users'} onClick={this.handleItemClick} />
-          <Menu.Menu position='right'>
-            <Menu.Item>
-              <Input transparent icon={{ name: 'search', link: true }} placeholder={'Search ' + activeItem} />
-            </Menu.Item>
-          </Menu.Menu>
+          <Menu.Item name='users' active={activeItem === 'users'} onClick={this.handleItemClick} style={{display: admin > 0 ? 'flex' : 'none'}} />
+          <SearchContainer source={this.state[activeItem]} />
         </Menu>
 
         <Segment attached='bottom'>
@@ -127,7 +135,7 @@ class App extends Component {
           <div style={{display: activeItem === 'pos' ? 'block' : 'none'}}>{'POS: ' + JSON.stringify(this.state.pos)}</div>
           <div style={{display: activeItem === 'quotes' ? 'block' : 'none'}}>{'QUOTES: ' + JSON.stringify(this.state.quotes)}</div>
           <div style={{display: activeItem === 'rfqs' ? 'block' : 'none'}}>{'RFQS: ' + JSON.stringify(this.state.rfqs)}</div>
-          <div style={{display: activeItem === 'users' ? 'block' : 'none'}}>{'USERS: ' + JSON.stringify(this.state.users)}</div>
+          <div style={{display: activeItem === 'users' && admin > 0 ? 'block' : 'none'}}>{'USERS: ' + JSON.stringify(this.state.users)}</div>
         </Segment>
 
       </div>

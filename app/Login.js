@@ -19,7 +19,7 @@ class Login extends Component {
 
   render() {
     return(
-      <Form success={this.props.loggedIn} error={this.props.status}>
+      <Form success={this.props.loggedIn} error={!!this.props.status}>
         <Form.Field>
           <label>Email</label>
           <input placeholder='Email' name='username' value={this.state.username} onChange={this.handleChange.bind(this)}/>

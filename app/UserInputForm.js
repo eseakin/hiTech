@@ -11,10 +11,13 @@ class userInputForm extends Component {
       submitFailure: false,
       failureMsg: 'Unknown failure',
       name: '',
+      userId: '',
       email: '',
       phone: '',
       dob: '',
-      address: ''
+      address: '',
+      notes: '',
+      admin: ''
     }
   }
 
@@ -34,7 +37,7 @@ class userInputForm extends Component {
   }
 
   handleSubmitCB(err) {
-    if(err.message) {
+    if(err && err.message) {
       this.setState({submitFailure: true, failureMsg: err.message})
     } else {
       this.setState({submitSuccess: true})
@@ -63,9 +66,9 @@ class userInputForm extends Component {
                   <label size='huge'>Name</label>
                   <input placeholder='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this)}/>
                 </Form.Field>
-                <Form.Field width={4}>
-                  <label>Date of Birth</label>
-                  <input placeholder='Date of Birth' name='dob' value={this.state.dob} onChange={this.handleChange.bind(this)}/>
+                <Form.Field width={8}>
+                  <label size='huge'>Unique ID</label>
+                  <input placeholder='Unique ID' name='userId' value={this.state.userId} onChange={this.handleChange.bind(this)}/>
                 </Form.Field>
               </Form.Group>
               <Form.Group>
@@ -77,11 +80,19 @@ class userInputForm extends Component {
                   <label>Email</label>
                   <input placeholder='Email' name='email' value={this.state.email} onChange={this.handleChange.bind(this)}/>
                 </Form.Field>
+                <Form.Field width={4}>
+                  <label>Date of Birth</label>
+                  <input placeholder='Date of Birth' name='dob' value={this.state.dob} onChange={this.handleChange.bind(this)}/>
+                </Form.Field>
               </Form.Group>
               <Form.Group>
                 <Form.Field width={8}>
                   <label>Address</label>
                   <TextArea rows={3} name='address' placeholder='Address' onChange={this.handleChange.bind(this)}/>
+                </Form.Field>
+                <Form.Field width={8}>
+                  <label>Notes</label>
+                  <TextArea rows={3} name='notes' placeholder='Notes' onChange={this.handleChange.bind(this)}/>
                 </Form.Field>
               </Form.Group>
               <Form.Group inline>

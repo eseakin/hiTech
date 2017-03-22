@@ -10,12 +10,17 @@ class CustomerInputForm extends Component {
       submitSuccess: false,
       submitFailure: false,
       failureMsg: 'Unknown failure',
-      partsCount: 0,
-      parts: [{ name: '', number: '', revision: '', description: '', prices: [{}] }],
-      custName: '',
-      custNum: '',
+      parts: {},
+      rfqs: {},
+      quotes: {},
+      pos: {},
+      compName: '',
+      contactName: '',
+      phone: '',
+      email: '',
       date: '',
-      expDate: ''
+      address: '',
+      notes: ''
     }
   }
 
@@ -102,54 +107,44 @@ class CustomerInputForm extends Component {
         <Form success={this.state.submitSuccess} error={this.state.submitFailure}>
             <Card fluid>
               <Card.Content>
-                <Card.Header>
-                  <Form.Group>
-                    <Form.Field width={8}>
-                      <label size='huge'>Customer Name</label>
-                      <input placeholder='Customer Name' name='custName' value={this.state.custName} onChange={this.handleChange.bind(this)}/>
-                    </Form.Field>
-                    <Form.Field width={8}>
-                      <label>Customer Number</label>
-                      <input readOnly placeholder='Customer Number' name='custNum' value={this.state.custNum} onChange={this.handleChange.bind(this)}/>
-                    </Form.Field>
-                  </Form.Group>
-                </Card.Header>
-              <Form.Group>
-                <Form.Field width={4}>
-                  <label>Date Received</label>
-                  <input placeholder='Date Received' name='date' value={this.state.date} onChange={this.handleChange.bind(this)}/>
-                </Form.Field>
-                <Form.Field width={4}>
-                  <label>Expiration Date</label>
-                  <input placeholder='Exp Date' name='expDate' value={this.state.expDate} onChange={this.handleChange.bind(this)}/>
-                </Form.Field>
-              </Form.Group>
+                <Form.Group>
+                  <Form.Field width={8}>
+                    <label size='huge'>Company Name</label>
+                    <input placeholder='Company Name' name='compName' value={this.state.custName} onChange={this.handleChange.bind(this)}/>
+                  </Form.Field>
+                  <Form.Field width={4}>
+                    <label>Date Received</label>
+                    <input placeholder='Date Received' name='date' value={this.state.date} onChange={this.handleChange.bind(this)}/>
+                  </Form.Field>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Field width={5}>
+                    <label>Contact Name</label>
+                    <input placeholder='Contact Name' name='contactName' value={this.state.dob} onChange={this.handleChange.bind(this)}/>
+                  </Form.Field>
+                  <Form.Field width={5}>
+                    <label>Phone Number</label>
+                    <input placeholder='Phone Number' name='phone' value={this.state.phone} onChange={this.handleChange.bind(this)}/>
+                  </Form.Field>
+                  <Form.Field width={6}>
+                    <label>Email</label>
+                    <input placeholder='Email' name='email' value={this.state.email} onChange={this.handleChange.bind(this)}/>
+                  </Form.Field>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Field width={8}>
+                    <label>Address</label>
+                    <TextArea rows={3} name='address' placeholder='Address' onChange={this.handleChange.bind(this)}/>
+                  </Form.Field>
+                  <Form.Field width={8}>
+                    <label>Notes</label>
+                    <TextArea rows={3} name='notes' placeholder='Notes' onChange={this.handleChange.bind(this)}/>
+                  </Form.Field>
+                </Form.Group>
             </Card.Content>
           </Card>
 
-          {this.state.parts.map((part, i) => {
-            return (
-              <AddPart 
-                key={i} 
-                partsCount={i} 
-                prices={part.prices}
-                addPrice={this.addPrice.bind(this)}
-                removePrice={this.removePrice.bind(this)}
-                handleChange={this.handleChange.bind(this)} 
-                handlePriceChange={this.handlePriceChange.bind(this)} 
-              />
-            )
-          })}
-
           <Button type='button' name='customers' primary onClick={(e) => this.handleSubmit(e, this.state)}>Submit</Button>
-
-          <Button onClick={this.removePart.bind(this)} type='button' floated='right'>
-            Remove Last Part
-          </Button>
-
-          <Button onClick={this.addPart.bind(this)} type='button' floated='right'>
-            Add Another Part
-          </Button>
 
           <Message success>
             <Message.Header>
