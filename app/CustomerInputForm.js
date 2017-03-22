@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { Button, Checkbox, Form, Card, Message, TextArea, Icon, Label } from 'semantic-ui-react'
 import AddPart from './AddPart'
 
-class RFQInputForm extends Component {
+class CustomerInputForm extends Component {
   constructor(props) {
     super(props);
 
@@ -93,8 +93,8 @@ class RFQInputForm extends Component {
     return(
       <div>
         <Label style={{width: '100%', borderRadius: '5px 5px 0 0'}} size='huge' color='blue'>
-          Add New RFQ
-          <Button style={{float:'right'}} size='tiny' name='rfqOpen' color='grey' compact inverted onClick={(e) => this.props.close(e)}>
+          Add New Customer
+          <Button style={{float:'right'}} size='tiny' name='customerOpen' color='grey' compact inverted onClick={(e) => this.props.close(e)}>
             X
           </Button>
         </Label>
@@ -141,7 +141,7 @@ class RFQInputForm extends Component {
             )
           })}
 
-          <Button type='button' name='rfqs' primary onClick={(e) => this.handleSubmit(e, this.state)}>Submit</Button>
+          <Button type='button' name='customers' primary onClick={(e) => this.handleSubmit(e, this.state)}>Submit</Button>
 
           <Button onClick={this.removePart.bind(this)} type='button' floated='right'>
             Remove Last Part
@@ -154,19 +154,19 @@ class RFQInputForm extends Component {
           <Message success>
             <Message.Header>
               Success
-              <Button style={{float:'right'}} size='medium' name='rfqOpen' color='green' onClick={(e) => this.props.close(e)}>
+              <Button style={{float:'right'}} size='medium' name='customerOpen' color='green' onClick={(e) => this.props.close(e)}>
                 Close Form
               </Button>
             </Message.Header>
             <Message.Content>
-              This RFQ has been saved.
+              This customer has been saved.
             </Message.Content>
           </Message>
 
           <Message error>
             <Message.Header>
-              Failure, RFQ was not saved.
-              <Button style={{float:'right'}} size='medium' name='rfqOpen' color='red' onClick={(e) => this.props.close(e)}>
+              Failure, customer was not saved.
+              <Button style={{float:'right'}} size='medium' name='customerOpen' color='red' onClick={(e) => this.props.close(e)}>
                 Close Form Without Saving
               </Button>
             </Message.Header>
@@ -181,4 +181,4 @@ class RFQInputForm extends Component {
   }
 }
 
-export default RFQInputForm
+export default CustomerInputForm

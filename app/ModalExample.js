@@ -1,10 +1,15 @@
 import React, {Component} from 'react'
-import RFQInputForm from './RFQInputForm';
 import { Button, Header, Modal, Card, Label, Search } from 'semantic-ui-react'
 import _ from 'lodash'
 import Login from './Login'
+import RFQInputForm from './RFQInputForm';
+import CustomerInputForm from './CustomerInputForm';
+import PoInputForm from './PoInputForm';
+import PartInputForm from './PartInputForm';
+import QuoteInputForm from './QuoteInputForm';
+import UserInputForm from './UserInputForm';
 
-const source = [
+const SOURCE = [
 {
   title: 'apple',
   description: 'test',
@@ -16,7 +21,14 @@ class ModalExample extends Component {
   constructor(props) {
     super(props);
   
-    this.state = { open: false };
+    this.state = { 
+      rfqOpen: false,
+      customerOpen: false,
+      partOpen: false,
+      quoteOpen: false,
+      poOpen: false,
+      userOpen: false,
+    };
   }
 
   componentWillMount() {
@@ -39,30 +51,77 @@ class ModalExample extends Component {
 
       this.setState({
         isLoading: false,
-        results: _.filter(source, isMatch),
+        results: SOURCE.filter(isMatch)
       })
     }, 500)
   }
 
   show(e) {
-    this.setState({open: !this.state.open})
+    let name = e.target.name
+
+    if(!this.props.admin && name === 'userOpen')
+      return
+    else
+      this.setState({[name]: true})
   }
 
   close(e) {
-    this.setState({open: false})
+    let name = e.target.name
+    this.setState({[name]: false})
   }
 
   loggedIn() {
     if(this.props.loggedIn) {
       return (
-        <Modal open={this.state.open} size={'small'}>
-          <Modal.Content>
-            <Modal.Description>
-              <RFQInputForm handleSubmit={this.props.handleSubmit} close={this.close.bind(this)}/>
-            </Modal.Description>
-          </Modal.Content>
+        <div>
+          <Modal open={this.state.rfqOpen} size={'small'}>
+            <Modal.Content>
+              <Modal.Description>
+                <RFQInputForm handleSubmit={this.props.handleSubmit} close={this.close.bind(this)}/>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
 
-        </Modal>
+          <Modal open={this.state.customerOpen} size={'small'}>
+            <Modal.Content>
+              <Modal.Description>
+                <CustomerInputForm handleSubmit={this.props.handleSubmit} close={this.close.bind(this)}/>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
+
+          <Modal open={this.state.partOpen} size={'small'}>
+            <Modal.Content>
+              <Modal.Description>
+                <PartInputForm handleSubmit={this.props.handleSubmit} close={this.close.bind(this)}/>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
+
+          <Modal open={this.state.quoteOpen} size={'small'}>
+            <Modal.Content>
+              <Modal.Description>
+                <QuoteInputForm handleSubmit={this.props.handleSubmit} close={this.close.bind(this)}/>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
+
+          <Modal open={this.state.poOpen} size={'small'}>
+            <Modal.Content>
+              <Modal.Description>
+                <PoInputForm handleSubmit={this.props.handleSubmit} close={this.close.bind(this)}/>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
+
+          <Modal open={this.state.userOpen} size={'small'}>
+            <Modal.Content>
+              <Modal.Description>
+                <UserInputForm handleSubmit={this.props.handleSubmit} close={this.close.bind(this)}/>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
+        </div>
       )
     } else {
       return (
@@ -90,11 +149,12 @@ class ModalExample extends Component {
 
     return(
       <div>
-        <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New RFQ</Button>
-        <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New Customer</Button>
-        <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New Part</Button>
-        <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New Quote</Button>
-        <Button onClick={this.show.bind(this)} style={{margin: 15}}>Add New PO</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='rfqOpen'>Add New RFQ</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='customerOpen'>Add New Customer</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='partOpen'>Add New Part</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='quoteOpen'>Add New Quote</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='poOpen'>Add New PO</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15, display: this.props.admin ? 'inline' : 'none'}} name='userOpen'>Add New User</Button>
 
         <Search
           loading={isLoading}
