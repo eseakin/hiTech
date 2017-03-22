@@ -124,6 +124,12 @@ class PartInputForm extends Component {
                   <input placeholder='Exp Date' name='expDate' value={this.state.expDate} onChange={this.handleChange.bind(this)}/>
                 </Form.Field>
               </Form.Group>
+              <Form.Group>
+                <Form.Field width={16}>
+                  <label>Notes</label>
+                  <TextArea rows={3} name='notes' placeholder='Notes' onChange={this.handleChange.bind(this)}/>
+                </Form.Field>
+              </Form.Group>
             </Card.Content>
           </Card>
 

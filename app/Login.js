@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import RFQInputForm from './RFQInputForm';
-import { Button, Header, Form } from 'semantic-ui-react'
+import { Button, Header, Form, Message } from 'semantic-ui-react'
 
 class Login extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class Login extends Component {
 
   render() {
     return(
-      <Form success={this.props.loggedIn}>
+      <Form success={this.props.loggedIn} error={this.props.status}>
         <Form.Field>
           <label>Email</label>
           <input placeholder='Email' name='username' value={this.state.username} onChange={this.handleChange.bind(this)}/>
@@ -31,6 +31,11 @@ class Login extends Component {
         <Button type='button' onClick={(e) => this.handleSubmit(e)}>
           Submit
         </Button>
+
+        <Message error>
+          <p>{this.props.status}</p>
+        </Message>
+
       </Form>
     )
   }

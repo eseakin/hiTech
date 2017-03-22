@@ -133,7 +133,7 @@ class ModalExample extends Component {
             <Modal.Description>
               <Card centered>
                 <Card.Content>
-                  <Login loggedIn={this.props.loggedIn} loginSubmit={this.props.loginSubmit} />
+                  <Login loggedIn={this.props.loggedIn} loginSubmit={this.props.loginSubmit} status={this.props.status} />
                 </Card.Content>
               </Card>
             </Modal.Description>

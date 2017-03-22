@@ -41,15 +41,19 @@ class App extends Component {
 
   handleSubmit(e, data, cb) {
     let name = e.target.name
+    console.log(name)
     console.log('submit form', this.state)
     //clean up form data for database
     delete data.failureMsg
     delete data.submitFailure
     delete data.submitSuccess
-    data.partsCount++
-    data.dateEntered = this.formattedDate()
-    data.date = this.formattedDate(new Date(data.date))
-    data.expDate = this.formattedDate(new Date(data.expDate))
+
+    if(name === 'rfqs') {
+      data.partsCount++
+      data.dateEntered = this.formattedDate()
+      data.date = this.formattedDate(new Date(data.date))
+      data.expDate = this.formattedDate(new Date(data.expDate))
+    }
 
     this.state.db.ref(name + '/').push(data)
       .then((err) => {cb(err); this.refreshDb()}, (err) => cb(err));
@@ -91,11 +95,17 @@ class App extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    const { loggedIn, activeItem, admin } = this.state
+    const { loggedIn, activeItem, admin, status } = this.state
 
     return (
       <div>
-        <ModalExample handleSubmit={this.handleSubmit.bind(this)} loggedIn={loggedIn} loginSubmit={this.loginSubmit.bind(this)} admin={this.state.admin} />
+        <ModalExample
+          handleSubmit={this.handleSubmit.bind(this)} 
+          loggedIn={loggedIn} 
+          loginSubmit={this.loginSubmit.bind(this)} 
+          admin={admin} 
+          status={status}
+        />
 
         <Menu attached='top' tabular>
           <Menu.Item name='customers' active={activeItem === 'customers'} onClick={this.handleItemClick} />
