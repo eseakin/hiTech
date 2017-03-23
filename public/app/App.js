@@ -1,33 +1,17 @@
 import React, { Component } from 'react';
 import ModalForm from './ModalForm';
 import SearchContainer from './SearchContainer';
-import { Menu, Segment, Input } from 'semantic-ui-react'
-import firebase from 'firebase'
-// import config from '../../config/config'
-
-console.log(process.env)
+import { Menu, Segment, Input } from 'semantic-ui-react';
+import axios from 'axios';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    const { apiKey, authDomain, databaseURL, storageBucket, messagingSenderId } = process.env;
-
-    const config = {
-      apiKey,
-      authDomain,
-      databaseURL,
-      storageBucket,
-      messagingSenderId
-    }
-
-    firebase.initializeApp(config);
-
     this.state = { 
       loggedIn: true, 
       admin: 2,
       activeItem: 'customers',
-      db: firebase.database(), 
       status: '', 
       users: {},
       customers: {},
@@ -43,18 +27,18 @@ class App extends Component {
   }
 
   refreshDb() {
-    this.state.db.ref('/').once('value').then((snapshot) => {
-      let data = snapshot.val();
-      
-      let { users, customers, parts, rfqs, quotes, pos } = data
-
-      this.setState({ users, customers, parts, rfqs, quotes, pos })
-    });
+    const context = this;
+    axios.get('/api')
+      .then((response) => {
+        let { users, customers, parts, rfqs, quotes, pos } = response.data
+        context.setState({ users, customers, parts, rfqs, quotes, pos });
+      })
+      .catch((error) => {console.log(error)});
   }
 
   handleSubmit(e, data, cb) {
+    let context = this;
     let name = e.target.name
-    console.log('submit form', this.state)
     //clean up form data for database
     delete data.failureMsg
     delete data.submitFailure
@@ -66,27 +50,31 @@ class App extends Component {
       data.date = this.formattedDate(new Date(data.date))
       data.expDate = this.formattedDate(new Date(data.expDate))
 
+    } else if(name === 'quotes') {
+
+    } else if(name === 'pos') {
+
+    } else if(name === 'parts') {
+
     } else if(name === 'users' && this.state.admin === 2) {
       data.dob = this.formattedDate(new Date(data.dob))
 
-      let payload = {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        dob: data.dob,
-        address: data.address,
-        notes: data.notes,
-        admin: data.admin
-      }
+    } else if(name === 'customers') {
 
-      this.state.db.ref(name + '/').child(data.userId).set(payload)
-        .then((err) => {cb(err); this.refreshDb()}, (err) => cb(err));
-
-      return
     }
 
-    this.state.db.ref(name + '/').push(data)
-      .then((err) => {cb(err); this.refreshDb()}, (err) => cb(err));
+    let obj = {
+      api: name,
+      payload: data
+    }
+    console.log('submit form', obj)
+
+    axios.post('/api', obj)
+      .then((response) => {
+        cb(response);
+        context.refreshDb();
+      })
+      .catch((error) => cb(error));
   }
 
   loginSubmit(e, data) {
@@ -94,15 +82,15 @@ class App extends Component {
     let email = data.username
     let password = data.password
 
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(
-        (response) => {
-          this.setState({loggedIn: true, admin: this.state.users[response.uid].admin})          
-        }, 
-        (error) => {
-          this.setState({status: error.message})
-        }
-    );
+    // firebase.auth().signInWithEmailAndPassword(email, password)
+    //   .then(
+    //     (response) => {
+    //       this.setState({loggedIn: true, admin: this.state.users[response.uid].admin})          
+    //     }, 
+    //     (error) => {
+    //       this.setState({status: error.message})
+    //     }
+    // );
   }
 
   formattedDate(d = new Date) {

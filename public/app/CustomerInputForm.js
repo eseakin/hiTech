@@ -14,7 +14,7 @@ class CustomerInputForm extends Component {
       rfqs: {},
       quotes: {},
       pos: {},
-      compName: '',
+      companyName: '',
       contactName: '',
       phone: '',
       email: '',
@@ -110,7 +110,7 @@ class CustomerInputForm extends Component {
                 <Form.Group>
                   <Form.Field width={8}>
                     <label size='huge'>Company Name</label>
-                    <input placeholder='Company Name' name='compName' value={this.state.custName} onChange={this.handleChange.bind(this)}/>
+                    <input placeholder='Company Name' name='companyName' value={this.state.custName} onChange={this.handleChange.bind(this)}/>
                   </Form.Field>
                   <Form.Field width={4}>
                     <label>Date Received</label>
