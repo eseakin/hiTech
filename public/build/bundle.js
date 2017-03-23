@@ -43701,11 +43701,9 @@ var _firebase = __webpack_require__(507);
 
 var _firebase2 = _interopRequireDefault(_firebase);
 
-var _config = __webpack_require__(425);
-
-var _config2 = _interopRequireDefault(_config);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import config from '../../config/config'
 
 console.log(process.env);
 
@@ -43722,7 +43720,15 @@ var App = function (_Component) {
       return _this.setState({ activeItem: name });
     };
 
-    _firebase2.default.initializeApp(_config2.default);
+    var config = {
+      apiKey: "AIzaSyAfaox1W-3L4YSy24KnSI8zxXnDY3NJtBg",
+      authDomain: "hitech-799b7.firebaseapp.com",
+      databaseURL: "https://hitech-799b7.firebaseio.com",
+      storageBucket: "hitech-799b7.appspot.com",
+      messagingSenderId: "732161124904"
+    };
+
+    _firebase2.default.initializeApp(config);
 
     _this.state = {
       loggedIn: true,
@@ -43913,26 +43919,7 @@ exports.default = App;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 425 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var config = {
-  apiKey: "AIzaSyAfaox1W-3L4YSy24KnSI8zxXnDY3NJtBg",
-  authDomain: "hitech-799b7.firebaseapp.com",
-  databaseURL: "https://hitech-799b7.firebaseio.com",
-  storageBucket: "hitech-799b7.appspot.com",
-  messagingSenderId: "732161124904"
-};
-
-exports.default = config;
-
-/***/ }),
+/* 425 */,
 /* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 

@@ -3,13 +3,21 @@ import ModalForm from './ModalForm';
 import SearchContainer from './SearchContainer';
 import { Menu, Segment, Input } from 'semantic-ui-react'
 import firebase from 'firebase'
-import config from '../../config/config'
+// import config from '../../config/config'
 
 console.log(process.env)
 
 class App extends Component {
   constructor(props) {
     super(props);
+
+    const config = {
+      apiKey: "AIzaSyAfaox1W-3L4YSy24KnSI8zxXnDY3NJtBg",
+      authDomain: "hitech-799b7.firebaseapp.com",
+      databaseURL: "https://hitech-799b7.firebaseio.com",
+      storageBucket: "hitech-799b7.appspot.com",
+      messagingSenderId: "732161124904"
+    };
 
     firebase.initializeApp(config);
 
