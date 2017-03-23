@@ -16,8 +16,8 @@
   "author": "Eric Eakin",
   "scripts": {
     "test": "",
-    "start": "node server/server",
-    "build": "cross-env NODE_ENV=production webpack --config ../webpack.production.config.js",    
+    "start": "node server/server.js",
+    "build": "NODE_ENV=production webpack -p --config webpack.production.config.js",    
     "eslint": "eslint .",
     "jscs": "jscs ."
   },
