@@ -17,7 +17,7 @@
   "scripts": {
     "test": "",
     "start": "node server/server.js",
-    "build": "NODE_ENV=production webpack -p --config webpack.production.config.js",    
+    "build": "rimraf dist && NODE_ENV=production webpack -p --config webpack.production.config.js",    
     "eslint": "eslint .",
     "jscs": "jscs ."
   },
