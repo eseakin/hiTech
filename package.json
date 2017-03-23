@@ -16,6 +16,8 @@
   "author": "Eric Eakin",
   "scripts": {
     "build": "webpack -p",
+    "build-dev": "webpack -w",
+    "dev": "nodemon ./server/server",
     "start": "node ./server/server"
   },
   "dependencies": {
