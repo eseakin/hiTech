@@ -8,8 +8,12 @@ class DisplayItemsContainer extends Component {
     super(props);
   
     this.state = {
-
+      items: []
     };
+
+    for(let key in this.props.source) {
+      
+    }
   }
 
   handleChange(e) {

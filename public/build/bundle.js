@@ -44471,7 +44471,7 @@ var App = function (_Component) {
         }),
         _react2.default.createElement(
           _semanticUiReact.Menu,
-          { attached: 'top', tabular: true },
+          { attached: 'top', stackable: true },
           _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'customers', active: activeItem === 'customers', onClick: this.handleItemClick }),
           _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'parts', active: activeItem === 'parts', onClick: this.handleItemClick }),
           _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'pos', active: activeItem === 'pos', onClick: this.handleItemClick }),
@@ -45969,7 +45969,11 @@ var DisplayItemsContainer = function (_Component) {
 
     var _this = (0, _possibleConstructorReturn3.default)(this, (DisplayItemsContainer.__proto__ || (0, _getPrototypeOf2.default)(DisplayItemsContainer)).call(this, props));
 
-    _this.state = {};
+    _this.state = {
+      items: []
+    };
+
+    for (var key in _this.props.source) {}
     return _this;
   }
 
@@ -46375,32 +46379,32 @@ var ModalForm = function (_Component) {
         null,
         _react2.default.createElement(
           _semanticUiReact.Button,
-          { onClick: this.show.bind(this), style: { margin: 15 }, name: 'customerOpen' },
+          { onClick: this.show.bind(this), style: { margin: 15 }, name: 'customerOpen', floated: 'left' },
           'Add New Customer'
         ),
         _react2.default.createElement(
           _semanticUiReact.Button,
-          { onClick: this.show.bind(this), style: { margin: 15 }, name: 'partOpen' },
+          { onClick: this.show.bind(this), style: { margin: 15 }, name: 'partOpen', floated: 'left' },
           'Add New Part'
         ),
         _react2.default.createElement(
           _semanticUiReact.Button,
-          { onClick: this.show.bind(this), style: { margin: 15 }, name: 'rfqOpen' },
+          { onClick: this.show.bind(this), style: { margin: 15 }, name: 'rfqOpen', floated: 'left' },
           'Add New RFQ'
         ),
         _react2.default.createElement(
           _semanticUiReact.Button,
-          { onClick: this.show.bind(this), style: { margin: 15 }, name: 'quoteOpen' },
+          { onClick: this.show.bind(this), style: { margin: 15 }, name: 'quoteOpen', floated: 'left' },
           'Add New Quote'
         ),
         _react2.default.createElement(
           _semanticUiReact.Button,
-          { onClick: this.show.bind(this), style: { margin: 15 }, name: 'poOpen' },
+          { onClick: this.show.bind(this), style: { margin: 15 }, name: 'poOpen', floated: 'left' },
           'Add New PO'
         ),
         _react2.default.createElement(
           _semanticUiReact.Button,
-          { onClick: this.show.bind(this), style: { margin: 15, display: this.props.admin == 2 ? 'inline' : 'none' }, name: 'userOpen' },
+          { onClick: this.show.bind(this), style: { margin: 15, display: this.props.admin == 2 ? 'inline' : 'none' }, name: 'userOpen', floated: 'left' },
           'Add New User'
         ),
         this.loggedIn()

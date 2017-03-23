@@ -116,12 +116,12 @@ class ModalForm extends Component {
 
     return(
       <div>
-        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='customerOpen'>Add New Customer</Button>
-        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='partOpen'>Add New Part</Button>
-        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='rfqOpen'>Add New RFQ</Button>
-        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='quoteOpen'>Add New Quote</Button>
-        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='poOpen'>Add New PO</Button>
-        <Button onClick={this.show.bind(this)} style={{margin: 15, display: this.props.admin == 2 ? 'inline' : 'none'}} name='userOpen'>Add New User</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='customerOpen' floated='left'>Add New Customer</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='partOpen' floated='left'>Add New Part</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='rfqOpen' floated='left'>Add New RFQ</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='quoteOpen' floated='left'>Add New Quote</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='poOpen' floated='left'>Add New PO</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15, display: this.props.admin == 2 ? 'inline' : 'none'}} name='userOpen' floated='left'>Add New User</Button>
 
         {this.loggedIn()}
       </div>

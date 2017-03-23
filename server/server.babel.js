@@ -1,10 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import firebase from 'firebase';
+var path = require('path');
+const favicon = require('serve-favicon')
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(favicon(path.join(__dirname,'../','public','favicon.png')));
 
 const config = { 
   apiKey: process.env.apiKey,

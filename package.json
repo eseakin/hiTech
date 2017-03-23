@@ -17,7 +17,7 @@
   "scripts": {
     "build": "webpack -p",
     "build-dev": "webpack -w",
-    "dev": "nodemon -r dotenv/config ./server/server",
+    "dev": "nodemon -r dotenv/config server/server.js",
     "start": "node ./server/server"
   },
   "dependencies": {
@@ -37,6 +37,7 @@
     "react-dom": "^15.4.2",
     "react-router": "^4.0.0",
     "semantic-ui-react": "^0.67.1",
+    "serve-favicon": "^2.4.1",
     "webpack": "^2.3.1"
   },
   "devDependencies": {

@@ -120,7 +120,7 @@ class App extends Component {
           status={status}
         />
 
-        <Menu attached='top' tabular>
+        <Menu attached='top' stackable>
           <Menu.Item name='customers' active={activeItem === 'customers'} onClick={this.handleItemClick} />
           <Menu.Item name='parts' active={activeItem === 'parts'} onClick={this.handleItemClick} />
           <Menu.Item name='pos' active={activeItem === 'pos'} onClick={this.handleItemClick} />
