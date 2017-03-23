@@ -15,10 +15,8 @@
   ],
   "author": "Eric Eakin",
   "scripts": {
-    "webpack-watch": "webpack -w",
-    "express-server": "node ./server",
-    "dev": "concurrent --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack -p",
+    "start": "node ./server/server"
   },
   "dependencies": {
     "babel-loader": "^6.4.1",
@@ -41,8 +39,6 @@
     "concurrently": "^3.4.0",
     "eslint": "^3.18.0",
     "eslint-plugin-react": "^6.10.2",
-    "express": "^4.15.2",
-    "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.10.1",
     "webpack-hot-middleware": "^2.17.1"
   }
