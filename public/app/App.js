@@ -3,7 +3,7 @@ import ModalForm from './ModalForm';
 import SearchContainer from './SearchContainer';
 import { Menu, Segment, Input } from 'semantic-ui-react'
 import firebase from 'firebase'
-import config from '../config/config'
+import config from '../../config/config'
 
 class App extends Component {
   constructor(props) {
