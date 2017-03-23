@@ -44285,10 +44285,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _stringify = __webpack_require__(460);
-
-var _stringify2 = _interopRequireDefault(_stringify);
-
 var _getPrototypeOf = __webpack_require__(23);
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -44320,6 +44316,10 @@ var _ModalForm2 = _interopRequireDefault(_ModalForm);
 var _SearchContainer = __webpack_require__(456);
 
 var _SearchContainer2 = _interopRequireDefault(_SearchContainer);
+
+var _DisplayItemsContainer = __webpack_require__(863);
+
+var _DisplayItemsContainer2 = _interopRequireDefault(_DisplayItemsContainer);
 
 var _semanticUiReact = __webpack_require__(30);
 
@@ -44474,36 +44474,7 @@ var App = function (_Component) {
           _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'users', active: activeItem === 'users', onClick: this.handleItemClick, style: { display: admin > 0 ? 'flex' : 'none' } }),
           _react2.default.createElement(_SearchContainer2.default, { source: this.state[activeItem] })
         ),
-        _react2.default.createElement(
-          _semanticUiReact.Segment,
-          { attached: 'bottom' },
-          _react2.default.createElement('div', { style: { display: activeItem === 'customers' ? 'block' : 'none' } }),
-          _react2.default.createElement(
-            'div',
-            { style: { display: activeItem === 'parts' ? 'block' : 'none' } },
-            'PARTS: ' + (0, _stringify2.default)(this.state.parts)
-          ),
-          _react2.default.createElement(
-            'div',
-            { style: { display: activeItem === 'pos' ? 'block' : 'none' } },
-            'POS: ' + (0, _stringify2.default)(this.state.pos)
-          ),
-          _react2.default.createElement(
-            'div',
-            { style: { display: activeItem === 'quotes' ? 'block' : 'none' } },
-            'QUOTES: ' + (0, _stringify2.default)(this.state.quotes)
-          ),
-          _react2.default.createElement(
-            'div',
-            { style: { display: activeItem === 'rfqs' ? 'block' : 'none' } },
-            'RFQS: ' + (0, _stringify2.default)(this.state.rfqs)
-          ),
-          _react2.default.createElement(
-            'div',
-            { style: { display: activeItem === 'users' && admin > 0 ? 'block' : 'none' } },
-            'USERS: ' + (0, _stringify2.default)(this.state.users)
-          )
-        )
+        _react2.default.createElement(_DisplayItemsContainer2.default, { source: this.state[activeItem], type: activeItem })
       );
     }
   }]);
@@ -45989,13 +45960,6 @@ var _UserInputForm2 = _interopRequireDefault(_UserInputForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var SOURCE = [{
-  title: 'apple',
-  description: 'test',
-  image: 'http://www.placehold.it/100x100',
-  price: '$100'
-}];
-
 var ModalForm = function (_Component) {
   (0, _inherits3.default)(ModalForm, _Component);
 
@@ -46037,19 +46001,6 @@ var ModalForm = function (_Component) {
           null,
           _react2.default.createElement(
             _semanticUiReact.Modal,
-            { open: this.state.rfqOpen, size: 'small' },
-            _react2.default.createElement(
-              _semanticUiReact.Modal.Content,
-              null,
-              _react2.default.createElement(
-                _semanticUiReact.Modal.Description,
-                null,
-                _react2.default.createElement(_RFQInputForm2.default, { handleSubmit: this.props.handleSubmit, close: this.close.bind(this) })
-              )
-            )
-          ),
-          _react2.default.createElement(
-            _semanticUiReact.Modal,
             { open: this.state.customerOpen, size: 'small' },
             _react2.default.createElement(
               _semanticUiReact.Modal.Content,
@@ -46071,6 +46022,19 @@ var ModalForm = function (_Component) {
                 _semanticUiReact.Modal.Description,
                 null,
                 _react2.default.createElement(_PartInputForm2.default, { handleSubmit: this.props.handleSubmit, close: this.close.bind(this) })
+              )
+            )
+          ),
+          _react2.default.createElement(
+            _semanticUiReact.Modal,
+            { open: this.state.rfqOpen, size: 'small' },
+            _react2.default.createElement(
+              _semanticUiReact.Modal.Content,
+              null,
+              _react2.default.createElement(
+                _semanticUiReact.Modal.Description,
+                null,
+                _react2.default.createElement(_RFQInputForm2.default, { handleSubmit: this.props.handleSubmit, close: this.close.bind(this) })
               )
             )
           ),
@@ -46157,11 +46121,6 @@ var ModalForm = function (_Component) {
         null,
         _react2.default.createElement(
           _semanticUiReact.Button,
-          { onClick: this.show.bind(this), style: { margin: 15 }, name: 'rfqOpen' },
-          'Add New RFQ'
-        ),
-        _react2.default.createElement(
-          _semanticUiReact.Button,
           { onClick: this.show.bind(this), style: { margin: 15 }, name: 'customerOpen' },
           'Add New Customer'
         ),
@@ -46169,6 +46128,11 @@ var ModalForm = function (_Component) {
           _semanticUiReact.Button,
           { onClick: this.show.bind(this), style: { margin: 15 }, name: 'partOpen' },
           'Add New Part'
+        ),
+        _react2.default.createElement(
+          _semanticUiReact.Button,
+          { onClick: this.show.bind(this), style: { margin: 15 }, name: 'rfqOpen' },
+          'Add New RFQ'
         ),
         _react2.default.createElement(
           _semanticUiReact.Button,
@@ -47647,12 +47611,7 @@ _reactDom2.default.render(_react2.default.createElement(_App2.default, null), do
 module.exports = { "default": __webpack_require__(467), __esModule: true };
 
 /***/ }),
-/* 460 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(468), __esModule: true };
-
-/***/ }),
+/* 460 */,
 /* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -47697,16 +47656,7 @@ __webpack_require__(499);
 module.exports = __webpack_require__(24).Array.from;
 
 /***/ }),
-/* 468 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var core  = __webpack_require__(24)
-  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
-module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
-  return $JSON.stringify.apply($JSON, arguments);
-};
-
-/***/ }),
+/* 468 */,
 /* 469 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -77916,6 +77866,283 @@ Feed.User = __WEBPACK_IMPORTED_MODULE_16__FeedUser__["a" /* default */];
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__Statistic__["a"]; });
 
 
+
+/***/ }),
+/* 861 */,
+/* 862 */,
+/* 863 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _keys = __webpack_require__(865);
+
+var _keys2 = _interopRequireDefault(_keys);
+
+var _getPrototypeOf = __webpack_require__(23);
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__(6);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(7);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = __webpack_require__(9);
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__(8);
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _semanticUiReact = __webpack_require__(30);
+
+var _DisplayItem = __webpack_require__(864);
+
+var _DisplayItem2 = _interopRequireDefault(_DisplayItem);
+
+var _lodash = __webpack_require__(312);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DisplayItemsContainer = function (_Component) {
+  (0, _inherits3.default)(DisplayItemsContainer, _Component);
+
+  function DisplayItemsContainer(props) {
+    (0, _classCallCheck3.default)(this, DisplayItemsContainer);
+
+    var _this = (0, _possibleConstructorReturn3.default)(this, (DisplayItemsContainer.__proto__ || (0, _getPrototypeOf2.default)(DisplayItemsContainer)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  (0, _createClass3.default)(DisplayItemsContainer, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.props.handleChange(e);
+    }
+  }, {
+    key: 'renderItems',
+    value: function renderItems(list) {
+      var results = [];
+      for (var key in list) {
+        results.push(_react2.default.createElement(_DisplayItem2.default, { item: item, type: type, key: key, id: key }));
+      }
+      console.log(results);
+      return results;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          source = _props.source,
+          type = _props.type;
+
+
+      return _react2.default.createElement(
+        _semanticUiReact.Segment,
+        { attached: 'bottom' },
+        (0, _keys2.default)(source).map(function (key) {
+          return _react2.default.createElement(_DisplayItem2.default, { item: source[key], type: type, key: key, id: key });
+        })
+      );
+    }
+  }]);
+  return DisplayItemsContainer;
+}(_react.Component);
+
+;
+
+exports.default = DisplayItemsContainer;
+
+/***/ }),
+/* 864 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _keys = __webpack_require__(865);
+
+var _keys2 = _interopRequireDefault(_keys);
+
+var _getPrototypeOf = __webpack_require__(23);
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__(6);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(7);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = __webpack_require__(9);
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__(8);
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _semanticUiReact = __webpack_require__(30);
+
+var _lodash = __webpack_require__(312);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DisplayItem = function (_Component) {
+  (0, _inherits3.default)(DisplayItem, _Component);
+
+  function DisplayItem(props) {
+    (0, _classCallCheck3.default)(this, DisplayItem);
+
+    var _this = (0, _possibleConstructorReturn3.default)(this, (DisplayItem.__proto__ || (0, _getPrototypeOf2.default)(DisplayItem)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  (0, _createClass3.default)(DisplayItem, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.props.handleChange(e);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          item = _props.item,
+          type = _props.type;
+
+      return _react2.default.createElement(
+        _semanticUiReact.Card,
+        { fluid: true },
+        _react2.default.createElement(
+          _semanticUiReact.Card.Content,
+          null,
+          _react2.default.createElement(
+            _semanticUiReact.List,
+            null,
+            (0, _keys2.default)(item).map(function (key) {
+              return _react2.default.createElement(
+                _semanticUiReact.List.Item,
+                { key: key },
+                key + ': ' + item[key]
+              );
+            })
+          )
+        )
+      );
+    }
+
+    // render() {
+    //   const { item, type } = this.props;
+    //   return(
+    //     <Card fluid>
+    //       <Card.Content>
+    //         <Card.Header>
+    //           <Label as='span' color='blue' size='large' ribbon>{partsCount + 1}</Label>
+    //           <Form.Field width={15} style={{float: 'right'}}>
+    //             <label>Part Name</label>
+    //             <input name={partsCount + ' name'} placeholder='Part Name' onChange={this.handleChange.bind(this)}/>
+    //           </Form.Field>
+    //         </Card.Header>
+    //       </Card.Content>
+
+    //       <Card.Content>
+    //         <Form.Group width={16}>
+    //           <Form.Field width={6}>
+    //             <label>Part Number</label>
+    //             <input name={partsCount + ' number'} placeholder='Part Number' onChange={this.handleChange.bind(this)} />
+    //           </Form.Field>
+    //           <Form.Field width={4}>
+    //             <label>Revision</label>
+    //             <input name={partsCount + ' revision'} placeholder='Revision' onChange={this.handleChange.bind(this)}/>
+    //           </Form.Field>
+    //         </Form.Group>
+
+    //         <Form.Field>
+    //           <label>Description</label>
+    //           <TextArea rows={3} name={partsCount + ' description'} placeholder='Description' onChange={this.handleChange.bind(this)}/>
+    //         </Form.Field>
+
+    //         {this.props.prices.map((price, i) => {
+    //           return (<AddPrice key={i} pricesIndex={i} partsCount={partsCount} handlePriceChange={this.props.handlePriceChange}/>)
+    //         })}
+
+    //         <Button type='button' style={{height: 40, marginTop: 20}} onClick={(e) => this.addPrice(e, partsCount)}>
+    //           Add Pricing
+    //         </Button>
+    //         <Button type='button' style={{height: 40, marginTop: 20}} onClick={(e) => this.removePrice(e, partsCount)}>
+    //           Remove Last Price
+    //         </Button>
+    //       </Card.Content>
+    //     </Card>
+    //   )
+    // }
+
+  }]);
+  return DisplayItem;
+}(_react.Component);
+
+;
+
+exports.default = DisplayItem;
+
+/***/ }),
+/* 865 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(866), __esModule: true };
+
+/***/ }),
+/* 866 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(867);
+module.exports = __webpack_require__(24).Object.keys;
+
+/***/ }),
+/* 867 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.14 Object.keys(O)
+var toObject = __webpack_require__(95)
+  , $keys    = __webpack_require__(80);
+
+__webpack_require__(248)('keys', function(){
+  return function keys(it){
+    return $keys(toObject(it));
+  };
+});
 
 /***/ })
 /******/ ]);

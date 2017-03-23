@@ -9,14 +9,6 @@ import PartInputForm from './PartInputForm';
 import QuoteInputForm from './QuoteInputForm';
 import UserInputForm from './UserInputForm';
 
-const SOURCE = [
-{
-  title: 'apple',
-  description: 'test',
-  image: 'http://www.placehold.it/100x100',
-  price: '$100'
-}]
-
 class ModalForm extends Component {
   constructor(props) {
     super(props);
@@ -49,14 +41,6 @@ class ModalForm extends Component {
     if(this.props.loggedIn) {
       return (
         <div>
-          <Modal open={this.state.rfqOpen} size={'small'}>
-            <Modal.Content>
-              <Modal.Description>
-                <RFQInputForm handleSubmit={this.props.handleSubmit} close={this.close.bind(this)}/>
-              </Modal.Description>
-            </Modal.Content>
-          </Modal>
-
           <Modal open={this.state.customerOpen} size={'small'}>
             <Modal.Content>
               <Modal.Description>
@@ -69,6 +53,14 @@ class ModalForm extends Component {
             <Modal.Content>
               <Modal.Description>
                 <PartInputForm handleSubmit={this.props.handleSubmit} close={this.close.bind(this)}/>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
+
+          <Modal open={this.state.rfqOpen} size={'small'}>
+            <Modal.Content>
+              <Modal.Description>
+                <RFQInputForm handleSubmit={this.props.handleSubmit} close={this.close.bind(this)}/>
               </Modal.Description>
             </Modal.Content>
           </Modal>
@@ -124,9 +116,9 @@ class ModalForm extends Component {
 
     return(
       <div>
-        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='rfqOpen'>Add New RFQ</Button>
         <Button onClick={this.show.bind(this)} style={{margin: 15}} name='customerOpen'>Add New Customer</Button>
         <Button onClick={this.show.bind(this)} style={{margin: 15}} name='partOpen'>Add New Part</Button>
+        <Button onClick={this.show.bind(this)} style={{margin: 15}} name='rfqOpen'>Add New RFQ</Button>
         <Button onClick={this.show.bind(this)} style={{margin: 15}} name='quoteOpen'>Add New Quote</Button>
         <Button onClick={this.show.bind(this)} style={{margin: 15}} name='poOpen'>Add New PO</Button>
         <Button onClick={this.show.bind(this)} style={{margin: 15, display: this.props.admin == 2 ? 'inline' : 'none'}} name='userOpen'>Add New User</Button>

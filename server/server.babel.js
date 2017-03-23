@@ -3,8 +3,8 @@ import bodyParser from 'body-parser';
 import firebase from 'firebase';
 
 const app = express();
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 const config = { 
   apiKey: process.env.apiKey,
@@ -12,7 +12,7 @@ const config = {
   databaseURL: process.env.databaseURL,
   storageBucket: process.env.storageBucket,
   messagingSenderId: process.env.messagingSenderId
-}
+};
 
 firebase.initializeApp(config);
 let database = firebase.database();
@@ -38,16 +38,12 @@ app.post('/api', (req, res) => {
     database.ref(name + '/').push(payload)
       .then((err) => res.send(err), (err) => res.send(err));    
   }
-})
-
-
-
-
+});
 
 
 app.use('/', express.static('public'));
 
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000;
 app.listen(port);
-console.log('listening on', port)
+console.log('listening on', port);

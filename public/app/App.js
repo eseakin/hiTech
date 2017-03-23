@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ModalForm from './ModalForm';
 import SearchContainer from './SearchContainer';
+import DisplayItemsContainer from './DisplayItemsContainer';
 import { Menu, Segment, Input } from 'semantic-ui-react';
 import axios from 'axios';
 
@@ -129,14 +130,7 @@ class App extends Component {
           <SearchContainer source={this.state[activeItem]} />
         </Menu>
 
-        <Segment attached='bottom'>
-          <div style={{display: activeItem === 'customers' ? 'block' : 'none'}}>{}</div>
-          <div style={{display: activeItem === 'parts' ? 'block' : 'none'}}>{'PARTS: ' + JSON.stringify(this.state.parts)}</div>
-          <div style={{display: activeItem === 'pos' ? 'block' : 'none'}}>{'POS: ' + JSON.stringify(this.state.pos)}</div>
-          <div style={{display: activeItem === 'quotes' ? 'block' : 'none'}}>{'QUOTES: ' + JSON.stringify(this.state.quotes)}</div>
-          <div style={{display: activeItem === 'rfqs' ? 'block' : 'none'}}>{'RFQS: ' + JSON.stringify(this.state.rfqs)}</div>
-          <div style={{display: activeItem === 'users' && admin > 0 ? 'block' : 'none'}}>{'USERS: ' + JSON.stringify(this.state.users)}</div>
-        </Segment>
+        <DisplayItemsContainer source={this.state[activeItem]} type={activeItem} />
 
       </div>
     );
