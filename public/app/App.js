@@ -5,6 +5,8 @@ import { Menu, Segment, Input } from 'semantic-ui-react'
 import firebase from 'firebase'
 import config from '../../config/config'
 
+console.log(process.env)
+
 class App extends Component {
   constructor(props) {
     super(props);
