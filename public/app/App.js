@@ -130,7 +130,7 @@ class App extends Component {
         </Menu>
 
         <Segment attached='bottom'>
-          <div style={{display: activeItem === 'customers' ? 'block' : 'none'}}>{'CUSTOMERS: ' + JSON.stringify(this.state.customers)}</div>
+          <div style={{display: activeItem === 'customers' ? 'block' : 'none'}}>{}</div>
           <div style={{display: activeItem === 'parts' ? 'block' : 'none'}}>{'PARTS: ' + JSON.stringify(this.state.parts)}</div>
           <div style={{display: activeItem === 'pos' ? 'block' : 'none'}}>{'POS: ' + JSON.stringify(this.state.pos)}</div>
           <div style={{display: activeItem === 'quotes' ? 'block' : 'none'}}>{'QUOTES: ' + JSON.stringify(this.state.quotes)}</div>

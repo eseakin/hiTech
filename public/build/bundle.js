@@ -44477,11 +44477,7 @@ var App = function (_Component) {
         _react2.default.createElement(
           _semanticUiReact.Segment,
           { attached: 'bottom' },
-          _react2.default.createElement(
-            'div',
-            { style: { display: activeItem === 'customers' ? 'block' : 'none' } },
-            'CUSTOMERS: ' + (0, _stringify2.default)(this.state.customers)
-          ),
+          _react2.default.createElement('div', { style: { display: activeItem === 'customers' ? 'block' : 'none' } }),
           _react2.default.createElement(
             'div',
             { style: { display: activeItem === 'parts' ? 'block' : 'none' } },
