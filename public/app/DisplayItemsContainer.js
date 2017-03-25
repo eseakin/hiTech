@@ -12,7 +12,7 @@ class DisplayItemsContainer extends Component {
     };
 
     for(let key in this.props.source) {
-      
+
     }
   }
 
@@ -20,21 +20,12 @@ class DisplayItemsContainer extends Component {
     this.props.handleChange(e);
   }
 
-  renderItems(list) {
-    let results = [];
-    for(let key in list) {
-      results.push(<DisplayItem item={item} type={type} key={key} id={key} />)
-    }
-    console.log(results)
-    return results;
-  }
-
   render() {
     const { source, type } = this.props
     
     return(
       <Segment attached='bottom'>
-        {Object.keys(source).map((key) => <DisplayItem item={source[key]} type={type} key={key} id={key} />)}
+        {Object.keys(source).map(key => <DisplayItem item={source[key]} type={type} key={key} id={key} />)}
       </Segment>
     )
   }

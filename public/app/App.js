@@ -4,14 +4,17 @@ import SearchContainer from './SearchContainer';
 import DisplayItemsContainer from './DisplayItemsContainer';
 import { Menu, Segment, Input } from 'semantic-ui-react';
 import axios from 'axios';
+import firebase from 'firebase';
+import lodash from 'lodash';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = { 
-      loggedIn: true, 
+      loggedIn: false, 
       admin: 2,
+      userId: '',
       activeItem: 'customers',
       status: '', 
       users: {},
@@ -21,18 +24,29 @@ class App extends Component {
       quotes: {},
       pos: {}
     };
-  }
 
-  componentWillMount() {
-    this.refreshDb()
+    this.getConfig();
+    
   }
 
   refreshDb() {
     const context = this;
-    axios.get('/api')
+    this.state.db.ref('/').once('value')
+      .then((snapshot) => {
+        let data = snapshot.val();  
+        data = _.pickBy(data, (val, key) => {return val !== undefined})
+        data.admin = data.users[this.state.userId].admin
+        context.setState(data);
+      })
+      .catch((error) => console.log(error));
+  }
+
+  getConfig() {
+    const context = this;
+    axios.get('/config')
       .then((response) => {
-        let { users, customers, parts, rfqs, quotes, pos } = response.data
-        context.setState({ users, customers, parts, rfqs, quotes, pos });
+        firebase.initializeApp(response.data);
+        context.setState({db: firebase.database()});
       })
       .catch((error) => {console.log(error)});
   }
@@ -64,34 +78,42 @@ class App extends Component {
 
     }
 
-    let obj = {
-      api: name,
-      payload: data
-    }
-    console.log('submit form', obj)
+    console.log('submit form', data)
 
-    axios.post('/api', obj)
-      .then((response) => {
-        cb(response);
-        context.refreshDb();
-      })
-      .catch((error) => cb(error));
+    if(name === 'users') {
+      this.state.db.ref(name + '/').child(data.userId).set(data)
+        .then((response) => {
+          cb(response);
+          context.refreshDb();
+        })
+        .catch((err) => cb(error));
+    } else {
+      this.state.db.ref(name + '/').push(data)
+        .then((response) => {
+          cb(response);
+          context.refreshDb();
+        })
+        .catch((err) => cb(error));
+    }
   }
 
   loginSubmit(e, data) {
     //send username and pw for verification
-    let email = data.username
-    let password = data.password
+    const context = this;
+    let { username, password } = data
+    username = 'e@e.com'
+    password = '123456'
 
-    // firebase.auth().signInWithEmailAndPassword(email, password)
-    //   .then(
-    //     (response) => {
-    //       this.setState({loggedIn: true, admin: this.state.users[response.uid].admin})          
-    //     }, 
-    //     (error) => {
-    //       this.setState({status: error.message})
-    //     }
-    // );
+    firebase.auth().signInWithEmailAndPassword(username, password)
+      .then(
+        (response) => {
+          context.setState({loggedIn: true, userId: response.uid}) 
+          context.refreshDb();
+        }, 
+        (error) => {
+          context.setState({status: error.message})
+        }
+    );
   }
 
   formattedDate(d = new Date) {
@@ -109,6 +131,7 @@ class App extends Component {
 
   render() {
     const { loggedIn, activeItem, admin, status } = this.state
+    const source = this.state[activeItem];
 
     return (
       <div>
@@ -120,17 +143,17 @@ class App extends Component {
           status={status}
         />
 
-        <Menu attached='top' stackable>
+        <Menu attached='top' stackable color='blue' inverted>
           <Menu.Item name='customers' active={activeItem === 'customers'} onClick={this.handleItemClick} />
           <Menu.Item name='parts' active={activeItem === 'parts'} onClick={this.handleItemClick} />
-          <Menu.Item name='pos' active={activeItem === 'pos'} onClick={this.handleItemClick} />
-          <Menu.Item name='quotes' active={activeItem === 'quotes'} onClick={this.handleItemClick} />
           <Menu.Item name='rfqs' active={activeItem === 'rfqs'} onClick={this.handleItemClick} />
+          <Menu.Item name='quotes' active={activeItem === 'quotes'} onClick={this.handleItemClick} />
+          <Menu.Item name='pos' active={activeItem === 'pos'} onClick={this.handleItemClick} />
           <Menu.Item name='users' active={activeItem === 'users'} onClick={this.handleItemClick} style={{display: admin > 0 ? 'flex' : 'none'}} />
-          <SearchContainer source={this.state[activeItem]} />
+          <SearchContainer source={source} placeholder={activeItem} />
         </Menu>
 
-        <DisplayItemsContainer source={this.state[activeItem]} type={activeItem} />
+        <DisplayItemsContainer source={source} type={activeItem} />
 
       </div>
     );

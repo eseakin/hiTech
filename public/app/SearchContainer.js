@@ -26,6 +26,7 @@ class SearchContainer extends Component {
 
   handleResultSelect = (e, result) => {
     this.setState({ value: result.title })
+    console.log(result)
     //do something
   }
 
@@ -36,7 +37,7 @@ class SearchContainer extends Component {
       if (this.state.value.length < 1) return this.resetComponent()
 
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-      const isMatch = (result) => re.test(result.compName) || re.test(result.name)
+      const isMatch = (result) => re.test(result.companyName) || re.test(result.name) || re.test(result.contactName)
 
       this.setState({
         isLoading: false,
@@ -45,13 +46,14 @@ class SearchContainer extends Component {
     }, 500)
   }
 
-  resultRenderer = (props) => {
+  resultRenderer = ({ name, companyName, contactName, phone, email }) => {
     return (
-      <div key={props.name} className='content'>
-        {props.compName && <div className='title'>{props.compName}</div>}
-        {props.name && <div className='title'>{props.name}</div>}
-        {props.contactName && <div className='price'>{props.contactName}</div>}
-        {props.phone && <div className='description'>{props.phone}</div>}
+      <div className='content'>
+        {companyName && <div className='title'>{companyName}</div>}
+        {name && <div className='title'>{name}</div>}
+        {contactName && <div className='price'>{contactName}</div>}
+        {phone && <div className='description'>{phone}</div>}
+        {email && <div className='description'>{email}</div>}
       </div>
     )
   }
@@ -60,7 +62,7 @@ class SearchContainer extends Component {
     const { isLoading, value, results } = this.state
 
     return(
-      <div style={{marginLeft: 180}}>
+      <div style={{marginLeft: 20, marginTop: 2}}>
         <Search
           loading={isLoading}
           onResultSelect={this.handleResultSelect}
@@ -68,6 +70,7 @@ class SearchContainer extends Component {
           results={results}
           value={value}
           resultRenderer={this.resultRenderer}
+          placeholder={'Search ' + this.props.placeholder}
         />
       </div>
     )

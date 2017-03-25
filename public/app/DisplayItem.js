@@ -15,14 +15,17 @@ class DisplayItem extends Component {
   }
 
   render() {
-    const {item, type} = this.props
+    const {item, type, id} = this.props
     return(
       <Card fluid>
         <Card.Content>
           <List>
+
             {Object.keys(item).map((key) => {
               return (<List.Item key={key}>{key + ': ' + item[key]}</List.Item>)
             })}
+            <List.Item>{'Database ID: ' + id}</List.Item>
+            
           </List>
         </Card.Content>
       </Card>

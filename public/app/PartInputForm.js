@@ -12,8 +12,8 @@ class PartInputForm extends Component {
       failureMsg: 'Unknown failure',
       partsCount: 0,
       parts: [{ name: '', number: '', revision: '', description: '', prices: [{}] }],
-      custName: '',
-      custNum: '',
+      companyName: '',
+      companyId: '',
       date: '',
       expDate: ''
     }
@@ -106,11 +106,11 @@ class PartInputForm extends Component {
                   <Form.Group>
                     <Form.Field width={8}>
                       <label size='huge'>Customer Name</label>
-                      <input placeholder='Customer Name' name='custName' value={this.state.custName} onChange={this.handleChange.bind(this)}/>
+                      <input placeholder='Customer Name' name='companyName' value={this.state.companyName} onChange={this.handleChange.bind(this)}/>
                     </Form.Field>
                     <Form.Field width={8}>
                       <label>Customer Number</label>
-                      <input readOnly placeholder='Customer Number' name='custNum' value={this.state.custNum} onChange={this.handleChange.bind(this)}/>
+                      <input readOnly placeholder='Customer Number' name='companyId' value={this.state.companyId} onChange={this.handleChange.bind(this)}/>
                     </Form.Field>
                   </Form.Group>
                 </Card.Header>
