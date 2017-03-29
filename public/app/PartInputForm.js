@@ -109,8 +109,8 @@ class PartInputForm extends Component {
                       <input placeholder='Customer Name' name='companyName' value={this.state.companyName} onChange={this.handleChange.bind(this)}/>
                     </Form.Field>
                     <Form.Field width={8}>
-                      <label>Customer Number</label>
-                      <input readOnly placeholder='Customer Number' name='companyId' value={this.state.companyId} onChange={this.handleChange.bind(this)}/>
+                      <label>Customer ID</label>
+                      <input readOnly placeholder='Customer ID' name='companyId' value={this.state.companyId} onChange={this.handleChange.bind(this)}/>
                     </Form.Field>
                   </Form.Group>
                 </Card.Header>

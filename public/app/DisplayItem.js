@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Card, List } from 'semantic-ui-react'
+import { Table } from 'semantic-ui-react'
 import _ from 'lodash';
 
 class DisplayItem extends Component {
@@ -14,23 +14,76 @@ class DisplayItem extends Component {
     this.props.handleChange(e);
   }
 
-  render() {
-    const {item, type, id} = this.props
-    return(
-      <Card fluid>
-        <Card.Content>
-          <List>
+          // <List>
+          //   {Object.keys(item).map((key) => {
+          //     return (<List.Item key={key}>{key + ': ' + item[key]}</List.Item>)
+          //   })}
+          //   <List.Item>{'Database ID: ' + id}</List.Item>
+          // </List>
 
-            {Object.keys(item).map((key) => {
-              return (<List.Item key={key}>{key + ': ' + item[key]}</List.Item>)
-            })}
-            <List.Item>{'Database ID: ' + id}</List.Item>
-            
-          </List>
-        </Card.Content>
-      </Card>
+
+  render() {
+    const { item, type, id} = this.props
+    const { companyName, name, contactName, phone, email, address, notes, parts, date, expDate, partsCount } = item
+
+    return(
+      <Table.Row key={id}>
+        
+        {companyName && <Table.Cell>{companyName}</Table.Cell>}
+        {name && <Table.Cell>{name}</Table.Cell>}
+        {partsCount && <Table.Cell>{partsCount}</Table.Cell>}
+        {contactName && <Table.Cell>{contactName}</Table.Cell>}
+        {phone && <Table.Cell>{phone}</Table.Cell>}
+        {email && <Table.Cell>{email}</Table.Cell>}
+        {address && <Table.Cell>{address}</Table.Cell>}
+        {date && <Table.Cell>{date}</Table.Cell>}
+        {expDate && <Table.Cell>{expDate}</Table.Cell>}
+        {id && <Table.Cell>{id}</Table.Cell>}
+      </Table.Row>
+
+
+
+
     )
   }
+
+      // <Card key={id}>
+      //   <Card.Content>
+      //     <Grid columns={3}>
+      //       <Grid.Row>
+
+      //         <Grid.Column width={6}>
+      //           <Card.Header>
+      //             {companyName && <div>{companyName}</div>}
+      //             {name && <div>{name}</div>}
+      //           </Card.Header>
+      //           <Card.Meta>
+      //             {contactName && <div>{contactName}</div>}
+      //             {date && <div>{date}</div>}
+      //           </Card.Meta>
+      //           <Card.Description>
+      //             {phone && <div>{phone}</div>}
+      //             {email && <div>{email}</div>}
+      //           </Card.Description>
+      //         </Grid.Column>
+
+      //         <Grid.Column>
+      //           <Card.Description>
+      //             {parts && parts.map(part => <div key={part.name}>{part.name} - {part.number} {part.revision}</div>)}
+      //           </Card.Description>
+      //         </Grid.Column>
+
+      //         <Grid.Column>
+      //           <Card.Description>
+      //             {address && <div>{address}</div>}
+      //             {notes && parts && <div>{notes}</div>}
+      //           </Card.Description>
+      //         </Grid.Column>
+
+      //       </Grid.Row>
+      //     </Grid>
+      //   </Card.Content>
+      // </Card>
 
   // render() {
   //   const { item, type } = this.props;

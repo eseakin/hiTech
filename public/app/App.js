@@ -13,7 +13,7 @@ class App extends Component {
 
     this.state = { 
       loggedIn: false, 
-      admin: 2,
+      admin: 0,
       userId: '',
       activeItem: 'customers',
       status: '', 
@@ -34,7 +34,7 @@ class App extends Component {
     this.state.db.ref('/').once('value')
       .then((snapshot) => {
         let data = snapshot.val();  
-        data = _.pickBy(data, (val, key) => {return val !== undefined})
+        data = _.pickBy(data, (val, key) => {return val !== undefined}) //pull out undefined fields
         data.admin = data.users[this.state.userId].admin
         context.setState(data);
       })
@@ -101,6 +101,8 @@ class App extends Component {
     //send username and pw for verification
     const context = this;
     let { username, password } = data
+
+    //DEV ONLY
     username = 'e@e.com'
     password = '123456'
 
@@ -153,7 +155,7 @@ class App extends Component {
           <SearchContainer source={source} placeholder={activeItem} />
         </Menu>
 
-        <DisplayItemsContainer source={source} type={activeItem} />
+        <DisplayItemsContainer source={source} type={activeItem} style={{display: loggedIn ? 'block' : 'none'}} />
 
       </div>
     );
